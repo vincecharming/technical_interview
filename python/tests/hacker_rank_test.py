@@ -1,5 +1,6 @@
 """
-Tests for HackerRank Sample Problems for SWE I Interview
+Vincent Charming (c) 2019
+Tests for HackerRank Sample Problems
 Note: Normally larger data sets would be imported from a YAML config file to test time complexity
 """
 
