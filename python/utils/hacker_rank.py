@@ -1,5 +1,7 @@
+#
+# Vincent Charming (c) 2019
+#
 """
-Vincent Charming (c) 2019
 HackerRank Sample Problems
 """
 
