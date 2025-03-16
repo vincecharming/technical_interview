@@ -1,12 +1,11 @@
 #
-# Vincent Charming (c) 2019
+# Vincent Charming (c) 2025
 #
 """
-Question for SWE I Interview
 Task: Print out the first 20 numbers in the fibonacci series.
 """
 
-__author__ = 'vcharming'
+__author__ = "vcharming"
 
 import argparse
 import logging
@@ -14,19 +13,19 @@ import sys
 
 # Initialize logger config
 logger = logging.getLogger(__name__)
-LOG_FORMAT = '[%(filename)s:%(lineno)s - %(levelname)-5s ] %(message)s'
+LOG_FORMAT = "[%(filename)s:%(lineno)s - %(levelname)-5s ] %(message)s"
 logging.basicConfig(format=LOG_FORMAT)
 logger.setLevel(logging.DEBUG)
 
 
 def print_fibonacci(n):
-    '''
+    """
     Prints the fibonacci sequence to n places
     :param n: positive integer
     :return:
-    '''
+    """
     # Data Validation
-    error_message = 'Parameter must be a positive integer.'
+    error_message = "Parameter must be a positive integer."
     if not isinstance(n, int):
         raise TypeError(error_message)
     if n <= 0:
@@ -42,11 +41,11 @@ def print_fibonacci(n):
 
 
 def init_parser():
-    '''
+    """
     Initialize an argument parser for command line options
 
     :return An instance of argparse.ArgumentParser
-    '''
+    """
 
     parser = argparse.ArgumentParser(description="Print the fibonacci series to the nth place")
 
@@ -58,16 +57,16 @@ def init_parser():
 
 
 def main(args):
-    '''
+    """
     Print the fibonacci series to the nth place
     :param args: The parsed command line arguments
-    '''
+    """
 
     print_fibonacci(int(args.num_of_places))
 
     sys.exit()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     p = init_parser()
     sys.exit(main(p.parse_args()))
