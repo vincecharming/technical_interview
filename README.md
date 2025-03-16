@@ -1,10 +1,13 @@
 # Technical Interview
 
-<a style="padding:13px" href="https://github.com/vincecharming">
+
+<div align="center">
+<a href="https://github.com/vincecharming">
   <img src="https://contrib.rocks/image?repo=vincecharming/technical_interview" />
 </a>
 
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vincecharming/)
+</div>
 
 
 ## Overview

@@ -18,9 +18,9 @@ logging.basicConfig(format=LOG_FORMAT)
 logger.setLevel(logging.DEBUG)
 
 
-def print_fibonacci(n):
+def get_fibonacci(n):
     """
-    Prints the fibonacci sequence to n places
+    Returns the fibonacci sequence to n places
     :param n: positive integer
     :return:
     """
@@ -32,12 +32,13 @@ def print_fibonacci(n):
         raise ValueError(error_message)
     
     current_num_behind_2, current_num_behind_1, current_num  = 0, 1, 1
+    fibonacci_sequence = []
     for i in range(n):
-        logger.info(current_num)
+        fibonacci_sequence.append(current_num)
         current_num = current_num_behind_2 + current_num_behind_1
         current_num_behind_2 = current_num_behind_1
         current_num_behind_1 = current_num
-    return
+    return fibonacci_sequence
 
 
 def init_parser():
@@ -53,6 +54,11 @@ def init_parser():
         "num_of_places",
         help="The number of places to print out the fibonacci sequence.")
 
+    parser.add_argument(
+        "--reverse-sequence",
+        action="store_true",
+        help="Reverses the output of the fibonacci sequence.")
+
     return parser
 
 
@@ -62,7 +68,13 @@ def main(args):
     :param args: The parsed command line arguments
     """
 
-    print_fibonacci(int(args.num_of_places))
+    logger.info(f"Getting the fibonacci sequence to {args.num_of_places} places.")
+    fibonacci_sequence = get_fibonacci(int(args.num_of_places)) # O(n)
+    if args.reverse_sequence:
+        logger.info("Reversing the fibonacci sequence.")
+        fibonacci_sequence.reverse()    # O(n)
+    for fibonacci_num in fibonacci_sequence:
+        logger.info(fibonacci_num)
 
     sys.exit()
 
