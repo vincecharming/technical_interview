@@ -1,5 +1,5 @@
 #
-# Vincent Charming (c) 2019
+# Vincent Charming (c) 2025
 #
 """
 Tests for HackerRank Sample Problems
@@ -118,20 +118,31 @@ class TestHackerRank(unittest.TestCase):
         for test_array, result in test_arrays_and_results:
             self.assertEqual(hacker_rank.jumping_on_clouds(test_array), result)
         self.assertRaises(TypeError, lambda: hacker_rank.jumping_on_clouds(0))
+        self.assertRaises(TypeError, lambda: hacker_rank.jumping_on_clouds(["string"]))
         self.assertRaises(ValueError, lambda: hacker_rank.jumping_on_clouds([]))
+        self.assertRaises(ValueError, lambda: hacker_rank.jumping_on_clouds([1,2,0]))
+        self.assertRaises(ValueError, lambda: hacker_rank.jumping_on_clouds([0,0,0]))
 
     def test_repeated_string(self):
         test_strings_and_results = [
-            (("aba", 10), 7),
-            (("a", 10), 10),
-            (("aaaaaa", 10), 10),
-            (("aaaaa", 1), 1),
-            (("zzzz", 15), 0)]
+            (["aba", 10], 7),
+            (["a", 10], 10),
+            (["aaaaaa", 10], 10),
+            (["aaaaa", 1], 1),
+            (["zzzz", 15], 0),
+            (["z", 10, "z"], 10),
+            (["a", 10, "z"], 0)]
         for test_string, result in test_strings_and_results:
-            self.assertEqual(hacker_rank.repeated_string(test_string[0], test_string[1]), result)
+            if len(test_string) == 2:
+                self.assertEqual(hacker_rank.repeated_string(test_string[0], test_string[1]), result)
+            else:   # Tests the 3rd optional param
+                self.assertEqual(hacker_rank.repeated_string(test_string[0], test_string[1], test_string[2]), result)
         self.assertRaises(TypeError, lambda: hacker_rank.repeated_string(["foo"], 10))
+        self.assertRaises(TypeError, lambda: hacker_rank.repeated_string("foo", 10, 0))
         self.assertRaises(TypeError, lambda: hacker_rank.repeated_string("foo", "10"))
         self.assertRaises(ValueError, lambda: hacker_rank.repeated_string("", 10))
+        self.assertRaises(ValueError, lambda: hacker_rank.repeated_string("aba", -5))
+        self.assertRaises(ValueError, lambda: hacker_rank.repeated_string("aba", 10, "too long"))
 
     def test_get_median_sorted(self):
         test_arrays_and_results = [
@@ -172,6 +183,8 @@ class TestHackerRank(unittest.TestCase):
             self.assertEqual(hacker_rank.making_anagrams(test_string[0], test_string[1]), result)
         self.assertRaises(TypeError, lambda: hacker_rank.making_anagrams(["foo"], "bar"))
         self.assertRaises(TypeError, lambda: hacker_rank.making_anagrams("foo", ["bar"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.making_anagrams("", "bar"))
+        self.assertRaises(ValueError, lambda: hacker_rank.making_anagrams("foo", ""))
 
     def test_alternating_characters(self):
         test_strings_and_results = [
@@ -182,10 +195,12 @@ class TestHackerRank(unittest.TestCase):
             ("AAABBB", 4),
             ("AAABBBAABB", 6),
             ("AABBAABB", 4),
-            ("ABABABAA", 1)]
+            ("ABABABAA", 1),
+            ("aBabAbaa", 1)]
         for test_string, result in test_strings_and_results:
             self.assertEqual(hacker_rank.alternating_characters(test_string), result)
         self.assertRaises(TypeError, lambda: hacker_rank.alternating_characters(["AAAA"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.alternating_characters(""))
         self.assertRaises(ValueError, lambda: hacker_rank.alternating_characters("AAZZBB"))
 
     def test_is_valid(self):
@@ -199,6 +214,7 @@ class TestHackerRank(unittest.TestCase):
         for test_string, result in test_strings_and_results:
             self.assertEqual(hacker_rank.is_valid(test_string), result)
         self.assertRaises(TypeError, lambda: hacker_rank.is_valid(["aabbcd"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.is_valid(""))
 
     def test_substr_count(self):
         test_strings_and_results = [
@@ -208,7 +224,9 @@ class TestHackerRank(unittest.TestCase):
             ((5, "aakaa"), 9)]
         for test_string, result in test_strings_and_results:
             self.assertEqual(hacker_rank.substr_count(test_string[0], test_string[1]), result)
+        self.assertRaises(TypeError, lambda: hacker_rank.substr_count("3", "foo"))
         self.assertRaises(TypeError, lambda: hacker_rank.substr_count(3, ["foo"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.substr_count(0, ""))
         self.assertRaises(ValueError, lambda: hacker_rank.substr_count(4, "foo"))
 
     def test_check_magazine(self):
@@ -236,6 +254,8 @@ class TestHackerRank(unittest.TestCase):
             self.assertEqual(hacker_rank.two_strings(test_string[0], test_string[1]), result)
         self.assertRaises(TypeError, lambda: hacker_rank.two_strings(["foo"], "bar"))
         self.assertRaises(TypeError, lambda: hacker_rank.two_strings("foo", ["bar"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.two_strings("", "bar"))
+        self.assertRaises(ValueError, lambda: hacker_rank.two_strings("foo", ""))
 
     def test_sherlock_and_anagrams(self):
         test_strings_and_results = [
@@ -248,6 +268,7 @@ class TestHackerRank(unittest.TestCase):
         for test_string, result in test_strings_and_results:
             self.assertEqual(hacker_rank.sherlock_and_anagrams(test_string), result)
         self.assertRaises(TypeError, lambda: hacker_rank.sherlock_and_anagrams(["foo"]))
+        self.assertRaises(ValueError, lambda: hacker_rank.sherlock_and_anagrams(""))
 
     def test_count_triplets(self):
         test_dicts = [
@@ -260,6 +281,7 @@ class TestHackerRank(unittest.TestCase):
             self.assertEqual(hacker_rank.count_triplets(test_dict["arr"], test_dict["r"]), test_dict["result"])
         self.assertRaises(TypeError, lambda: hacker_rank.count_triplets(34508, 2))
         self.assertRaises(TypeError, lambda: hacker_rank.count_triplets([1, 2, 2, 4], [2]))
+        self.assertRaises(ValueError, lambda: hacker_rank.count_triplets([], 2))
         self.assertRaises(ValueError, lambda: hacker_rank.count_triplets([1, 2, 2, 4], -1))
 
     def test_freq_query(self):
@@ -290,6 +312,8 @@ class TestHackerRank(unittest.TestCase):
             self.assertEqual(hacker_rank.freq_query(test_array), result)
         self.assertRaises(TypeError, lambda: hacker_rank.freq_query(0))
         self.assertRaises(ValueError, lambda: hacker_rank.freq_query([]))
+        self.assertRaises(ValueError, lambda: hacker_rank.freq_query([[1, 5, 4]]))
+        self.assertRaises(ValueError, lambda: hacker_rank.freq_query([[4, 5]]))
 
 
 def suite():

@@ -1,12 +1,11 @@
 #
-# Vincent Charming (c) 2019
+# Vincent Charming (c) 2025
 #
 """
 HackerRank Sample Problems
 """
 
 import bisect
-import unittest
 
 from collections import Counter, defaultdict
 
@@ -15,7 +14,7 @@ __author__ = 'vcharming'
 '''
 Given 2 arrays (sorted & distinct) find the number of elements in common.
 '''
-def get_num_common_in_array(arr_1, arr_2):
+def get_num_common_in_array(arr_1: list, arr_2: list):
     '''
     Returns the number of common elemnts found in 2 distinct sorted arrays
     The arrays are assumed to be sorted (i.e. not validated)
@@ -60,7 +59,7 @@ Given a number as an array, with each digit as an element, add 1. Assume the num
 Ex. 284 + 1 = 285 > [2, 8, 4] would return [2, 8, 5]
 Ex. 9 + 1 = 10 > [9] would return [1, 0]
 '''
-def add_one_to_array_num(num_arr):
+def add_one_to_array_num(num_arr: list):
     '''
     Adds 1 to a number given as an array
     :param num_arr: A number as an array, where each value is a positive 0-9 integer
@@ -81,6 +80,7 @@ def add_one_to_array_num(num_arr):
             # Accounts for having to carry the one all the way to start of the array
             if j == 0:
                 num_arr.insert(j, 1)
+        # Since the number is less than 9 so we can just add 1 and break
         else:
             num_arr[j] += 1
             break
@@ -101,7 +101,7 @@ Ex. Function returns 7 for the matrix below
 0 0 0 0 0 0
 0 0 0 0 0 0
 '''
-def hourglass_sum(arr):
+def hourglass_sum(arr: list):
     '''
     Returns the largest sum of an hourglass shape as defined below
     :param arr: A 2D array that is at least 3x3
@@ -113,9 +113,11 @@ def hourglass_sum(arr):
 
     for j in range(len(arr) - 2):
         for i in range(len(arr[0]) - 2):
-            temp_sum = arr[j][i] + arr[j][i + 1] + arr[j][i + 2] + \
-                arr[j + 1][i + 1] + \
+            temp_sum = (
+                arr[j][i]     + arr[j][i + 1]     + arr[j][i + 2] + \
+                                arr[j + 1][i + 1] + \
                 arr[j + 2][i] + arr[j + 2][i + 1] + arr[j + 2][i + 2]
+            )
             # On the first pass, the result gets set to the value of the hourglass as a baseline
             if j == 0:
                 result = temp_sum
@@ -131,11 +133,11 @@ Given the value of money and the cost of each flavor for t trips to the Ice Crea
 choose two distinct flavors such that they spend their entire pool of money during each visit.
 Return ID numbers for the two types of ice cream that Sunny and Johnny purchase. Return the smaller ID first and
 the larger ID second.
-Ex. n = 5, cost = [1, 4, 5, 3, 2], money = 4 would return (1, 4) because at the costs at those indexes are (1, 3),
+Ex. n = 5, cost = [1, 4, 5, 3, 2], money = 4 would return (1, 4) because at the costs at those indexes (starting at 1) are 1 & 3,
 which add up to 4
 Ex. n = 4, cost = [2, 2, 4, 3], money = 4 would return (1, 2) because 2 + 2 = 4
 '''
-def what_flavors(cost, money):
+def what_flavors(cost: list, money: int):
     '''
     Return an ordered pair of indexes (starting at 1) that correspond with the spending the entire money amount
     :param cost: An unsorted array of prices
@@ -170,9 +172,8 @@ Given an array of integers and a target value, determine the number of pairs of 
 difference equal to the target value.
 Ex. [1, 2, 4, 3] and a target value of 1 would return 3 since 2 - 1 = 1, 3 - 2 = 1, 4 - 3 = 1
 '''
-def num_of_pairs(k, arr):
+def num_of_pairs(k: int, arr: list):
     '''
-
     :param k: The difference value
     :param arr: an unsorted array
     :return: An ordered pair of indexes from the cost array (starting at 1)
@@ -188,7 +189,7 @@ John works at a clothing store. He has a large pile of socks that he must pair b
 of integers representing the color of each sock, determine how many pairs of socks with matching colors there are.
 Ex. [1, 2, 1, 2, 1, 3, 2] would return 2
 '''
-def sock_merchant(arr):
+def sock_merchant(arr: list):
     '''
     Finds the total number of paired identical numbers in an unsorted array
     :param arr: An unsorted array
@@ -230,8 +231,8 @@ def sock_merchant(arr):
 Counting Valleys
 
 Gary is an avid hiker. He tracks his hikes meticulously, paying close attention to small details like topography.
-During his last hike he took exactly  steps. For every step he took, he noted if it was an uphill, , or a downhill,
-step. Gary's hikes start and end at sea level and each step up or down represents a  unit change in altitude.
+During his last hike he took exactly  steps. For every step he took, he noted if it was an uphill "U" or a downhill
+"D" step. Gary's hikes start and end at sea level and each step up or down represents a unit change in altitude.
 We define the following terms:
     A mountain is a sequence of consecutive steps above sea level, starting with a step up from sea level and
     ending with a step down to sea level.
@@ -240,7 +241,7 @@ We define the following terms:
 Given Gary's sequence of up and down steps during his last hike, find and print the number of valleys he walked through.
 Ex. "DDUUUUDD" would return 1
 '''
-def counting_valleys(s):
+def counting_valleys(s: str):
     '''
     Prints the total number of valleys where a valley is defined as
     one or more steps below sea level and then back to sea level
@@ -259,11 +260,12 @@ def counting_valleys(s):
     num_valleys = 0
 
     for c in s.upper():
-        if c is 'U':
+        if c == 'U':
             current_level += 1
+            # If the current level is now 0, then we have exited a valley
             if current_level == 0:
                 num_valleys += 1
-        elif c is 'D':
+        elif c == 'D':
             current_level -= 1
         else:
             raise ValueError(error_message)
@@ -279,7 +281,7 @@ cloud plus 1 or 2. She must avoid the thunderheads. Determine the minimum number
 from her starting postion to the last cloud. It is always possible to win the game.
 Ex. c = [0, 1, 0, 0, 0, 1, 0] would return 3
 '''
-def jumping_on_clouds(c):
+def jumping_on_clouds(c: list):
     '''
     Finds the most efficient path with the least amount of cloud jumps. Jumps can be 1 or 2 higher than the current cloud.
     :param c: A list formatted in binary, where 1's have to be avoided (thunderheads)
@@ -289,7 +291,12 @@ def jumping_on_clouds(c):
     error_message = 'Parameter must be a binary list.'
     if not isinstance(c, list):
         raise TypeError(error_message)
+    elif not all(isinstance(x, int) for x in c):
+        raise TypeError(error_message)
+    c_set = set(c)
     if not c:
+        raise ValueError(error_message)
+    elif len(c_set) > 2 or not (0 in c_set and 1 in c_set):
         raise ValueError(error_message)
 
     num_jumps = -1
@@ -314,29 +321,30 @@ Lilah has a string, s, of lowercase English letters that she repeated infinitely
 Given an integer, n, find and print the number of letter a's in the first n letters of Lilah's infinite string
 Ex. s = 'aba', n = 10. output 7
 '''
-def repeated_string(s, n):
+def repeated_string(s: str, n: int, char: str = 'a'):
     '''
     Gets the number of a's in an infinite repeating string s of length n
     :param s: String to be repeated
     :param n: Integer of the length of the repeating string
+    :param char: The character to be counted
     :return: Returns the number of a's in the repeated string
     '''
     # Data Validation on params
-    error_message = 'Parameters must be a string of non zero length and an integer.'
-    if not isinstance(s, str):
+    error_message = 'Parameters must be a string of non zero length, a positive integer, and an optional single character string.'
+    if not isinstance(s, str) or not isinstance(n, int) or not isinstance(char, str):
         raise TypeError(error_message)
     if not isinstance(n, int):
         raise TypeError(error_message)
-    if not s:
+    if not s or n <= 0 or len(char) != 1:
         raise ValueError(error_message)
 
     # Finds the nubmer of a's in the string
     # Counting O(n)
-    num_a_in_s = s.count("a")
+    num_a_in_s = s.count(char)
     # Multiplies that by the number of whole strings in length n
     total_num_a = int(n/len(s)) * num_a_in_s
     # Finds the remainding a's in the string
-    total_num_a += s[:(n - (int(n/len(s)) * len(s)))].count("a")
+    total_num_a += s[:(n - (int(n/len(s)) * len(s)))].count(char)
 
     return total_num_a
 
@@ -352,7 +360,7 @@ Given the number of trailing days d and a client's total daily expenditures for 
 the number of times the client will receive a notification over all n days
 Ex. expenditures = [10, 20, 30, 40, 50], d = 3 would return 1
 '''
-def get_median_sorted(arr):
+def get_median_sorted(arr: list):
     '''
     Returns the median from a sorted array of integers
     :param arr: A sorted list of integers
@@ -365,7 +373,7 @@ def get_median_sorted(arr):
     else:
         return arr[middle]
 
-def activity_notifications(expenditure, d):
+def activity_notifications(expenditure: list, d: int):
     '''
     Returns the number of notifications that would be sent out to the client. A notification is sent if the current day's
     expenditures is greater than or equal to the median of the preceding days (d) median
@@ -376,6 +384,7 @@ def activity_notifications(expenditure, d):
     trailing_expenditures = []
     # Initialize trailing expenditures
     for i in range(0, d):
+        # Sorts the list O(n)
         bisect.insort(trailing_expenditures, expenditure[i])
 
     num_notifications = 0
@@ -386,6 +395,7 @@ def activity_notifications(expenditure, d):
         # The below line works, but it is not as efficient as a binary search removal
         # trailing_expenditures.remove(expenditure[i - d])
         del trailing_expenditures[bisect.bisect_left(trailing_expenditures, expenditure[i - d])]
+        # Sorts the new list O(n)
         bisect.insort(trailing_expenditures, expenditure[i])
 
     return num_notifications
@@ -402,7 +412,7 @@ Given d datasets, print the number of inversions that must be swapped to sort ea
 Ex. arr = [1, 1, 1, 2, 2] would return 0  
 Ex. arr = [2, 1, 3, 1, 2] would return 4
 '''
-def merge_halves(left, right):
+def merge_halves(left: list, right: list):
     result = []
     i, j, swaps = 0, 0, 0
     len_left = len(left)
@@ -426,7 +436,7 @@ def merge_halves(left, right):
     result += right[j:]
     return swaps, result
 
-def merge_sort(arr):
+def merge_sort(arr: list):
     '''
     Sorts the left and half side until each side has 1 element, then merges those sides back together recursively
     '''
@@ -440,7 +450,7 @@ def merge_sort(arr):
         m_swaps, result = merge_halves(left, right)
         return (left_swaps + right_swaps + m_swaps), result
 
-def count_inversions(arr):
+def count_inversions(arr: list):
     # Merge sort O(n log n)
     swaps, result = merge_sort(arr)
     return swaps
@@ -463,7 +473,7 @@ of character deletions required to make the two strings anagrams. Can you help h
 Given two strings, a and b, that may or may not be of the same length, determine the minimum number of character
 deletions required to make a and b anagrams. Any characters can be deleted from either of the strings.
 '''
-def making_anagrams(str_1, str_2):
+def making_anagrams(str_1: str, str_2: str):
     '''
     Returns the number of deleted characters from both strings in order to be left with an anagram.
     We consider two strings to be anagrams of each other if the first string's letters can be rearranged
@@ -474,8 +484,11 @@ def making_anagrams(str_1, str_2):
     :return: The number of deletions required. 0 if not possible
     '''
     # Data Validation
+    error_message = 'Parameters must be strings contianing alphabetical characters'
     if not (isinstance(str_1, str) and isinstance(str_2, str)):
-        raise TypeError('Parameters must be strings contianing alphabetical characters')
+        raise TypeError(error_message)
+    if not str_1 or not str_2:
+        raise ValueError(error_message)
 
     # Sorted O(n log n)
     str_1_sorted = sorted(str_1)
@@ -496,9 +509,7 @@ def making_anagrams(str_1, str_2):
             num_deletions += 1
             str_2_ptr += 1
 
-    #print("str_1_ptr: {} len_str_1: {}".format(str_1_ptr, len_str_1))
-    #print("str_2_ptr: {} len_str_2: {}".format(str_2_ptr, len_str_2))
-
+    # If there are remaining characters in either string, then they must be deleted
     num_deletions += (len_str_1 - str_1_ptr) + (len_str_2 - str_2_ptr)
 
     return num_deletions
@@ -520,22 +531,30 @@ ABABABAB -> 0
 BABABA -> 0
 AAABBB -> 4
 '''
-def alternating_characters(s):
+def alternating_characters(s: str):
     '''
     Finds the number of deleted characters necessary such that s is left alternating between 'A' and 'B'
     :param s: A string containing only A's and B's
     :return: Number of deletions
     '''
     # Data Valiation
-    error_message = 'Parameter must be a string containing only A\'s and B\'s'
+    error_message = "Parameter must be a string containing only A's and B's"
     if not isinstance(s, str):
         raise TypeError(error_message)
+    s_upper = s.upper()
+    s_set = set(s_upper)
+    if not s_upper:
+        raise ValueError(error_message)
+    # Alternate method to check for only A's and B's
+    # elif len(s_set) > 2 or not ("A" in s_set and "B" in s_set):
+    #     raise ValueError(error_message)
+
     num_of_deletions = 0
 
-    for i in range(0, len(s) - 1):
-        if not (s[i].upper() == "A" or s[i].upper() == "B"):
+    for i in range(0, len(s_upper) - 1):
+        if not (s_upper[i] == "A" or s_upper[i] == "B"):
             raise ValueError(error_message)
-        if s[i].upper() == s[i + 1].upper():
+        if s_upper[i] == s_upper[i + 1]:
             num_of_deletions += 1
 
     return num_of_deletions
@@ -551,19 +570,23 @@ will occur the same number of times. Given a string s, determine if it is valid.
 For example, if s = 'abc', it is a valid string because frequencies are {a : 1, b : 1, c : 1}. So is s = 'abcc' because we
 can remove one c and have 1 of each character in the remaining string.
 
-Ex. 'xxxaabbccrry' -> NO
+Ex.
+'xxxaabbccrry' -> NO
 'aabbcd' -> NO
 'aabbc' -> YES
 '''
-def is_valid(s):
+def is_valid(s: str):
     '''
     Checks if all the charaters occur the same number of times. One extra character is allowed to be present.
     :param s: A string of letters
     :return: 'YES' if valid, 'NO' otherwise
     '''
     # Data Validation
+    error_message = 'Parameter must be a string of letters.'
     if not isinstance(s, str):
-        raise TypeError('Parameter must be a string of letters.')
+        raise TypeError(error_message)
+    if not s:
+        raise ValueError(error_message)
 
     # Sorted O(n log n)
     s_sorted = sorted(s)
@@ -580,7 +603,7 @@ def is_valid(s):
     
     extra_char_available = True
     for i in range(i + 1, len(s_sorted) - 1):
-        # Accounts for the next char equaling the current and the one after that being different (i.e. an extra character)
+        # Accounts for the next character equaling the current and the one after that being different (i.e. an extra character)
         if (s_sorted[i] == s_sorted[i + 1]):
             current_char_freq += 1
             i += 1
@@ -624,12 +647,13 @@ determine how many special palindromic substrings can be formed from it.
 Ex. s = 'abcbaba' n = 7 result is 10
 {a, b, c, b, a, b, a, bcb, bab, aba}
 '''
-def substr_count(n, s):
+def substr_count(n: int, s: str):
     # Data Validation
-    if not isinstance(s, str):
-        raise TypeError('Parameter must be a string of letters.')
-    if n != len(s):
-        raise ValueError('Parameter n must be the lenght of the string.')
+    error_message = 'Parameters must be an integer equal to the the length of the string and the string of letters.'
+    if not (isinstance(n, int) and isinstance(s, str)):
+        raise TypeError(error_message)
+    if not s or n != len(s):
+        raise ValueError(error_message)
 
     count = n
     for x in range(n): 
@@ -639,7 +663,7 @@ def substr_count(n, s):
             if s[x] == s[y]:
                 count += 1
             else:
-                # Accounts for the special case os xx.xx where the middle character is indifferent
+                # Accounts for the special case of xx.xx where the middle character is indifferent
                 if s[x:y] == s[y+1 : 2*y-x+1]:
                     count += 1
                 break
@@ -657,7 +681,7 @@ He cannot use substrings or concatenation to create the words he needs.
 Ex. magazine = 'give me one grand today night' note = 'give one grand today' result 'Yes'
 Ex. magazine = 'Give me one grand today night' note = 'give one grand today' result 'No'
 '''
-def check_magazine(magazine, ransom):
+def check_magazine(magazine: list, ransom: list):
     '''
     Returns true if the magazine contains all the words (case sensitive) found in the ransom note
     without having to use substrings or concatentation of characters
@@ -678,25 +702,29 @@ Two Strings
 Given two strings, determine if they share a common substring. A substring may be as small as one character.
 
 For example, the words "a", "and", "art" share the common substring a. The words "be" and "cat" do not share a substring.
-Ex. s1 = 'hello', s2 = 'world' would print 'YES'
-Ex. s1 = 'hi', s2 = 'world' would print 'NO'
+Ex.
+str_1 = 'hello', str_2 = 'world' would print 'YES'
+str_1 = 'hi', str_2 = 'world' would print 'NO'
 '''
-def two_strings(s1, s2):
+def two_strings(str_1: str, str_2: str):
     '''
     Finds if 2 strings share a common substring where a substring can be as small as a one character.
-    :param s1: A string
-    :param s2: A string
+    :param str_1: A string
+    :param str_2: A string
     :retrun: 'YES' if they share a common substring, 'NO' otherwise
     '''
     # Data Validation
-    if not (isinstance(s1, str) and isinstance(s2, str)):
-        raise TypeError('Parameters must be strings.')
+    error_message = 'Parameters must be strings.'
+    if not (isinstance(str_1, str) and isinstance(str_2, str)):
+        raise TypeError(error_message)
+    if not str_1 or not str_2:
+        raise ValueError(error_message)
 
     # Counter O(n)
-    s1_dict = Counter(s1)
+    str_1_dict = Counter(str_1)
     output_str = 'NO'
-    for c in s2:
-        if c in s1_dict:
+    for c in str_2:
+        if c in str_1_dict:
             output_str = 'YES'
             break
     return output_str
@@ -709,15 +737,18 @@ Two strings are anagrams of each other if the letters of one string can be rearr
 Given a string, find the number of pairs of substrings of the string that are anagrams of each other.
 Ex. "mom" -> all anagrammatic pairs are ["m", "m"] and ["mo", "om"] at positions [0, 2] and [[0:1], [1:2]] respectively
 '''
-def sherlock_and_anagrams(s):
+def sherlock_and_anagrams(s: str):
     '''
     Returns the number of anagrams present in the given string
     :param s: A string to search for anagrams
     :return: The maximum number of anagrams possible
     '''
     # Data Validation
+    error_message = 'Parameter must be a string of letters.'
     if not isinstance(s, str):
-        raise TypeError('Parameter must be a string of letters.')
+        raise TypeError(error_message)
+    if not s:
+        raise ValueError(error_message)
 
     # The key is anagrams are identical after sorting alphabetically
     anagrams = 0
@@ -741,7 +772,7 @@ You are given an array and you need to find number of tripets of indices (i, j, 
 indices are in geometric progression for a given common ratio r and i < j < k.
 Ex. a, ar, ar^1, ar^2, ar^3,...
 '''
-def count_triplets(arr, r):
+def count_triplets(arr: list, r: int):
     '''
     Returns the number of triplets that are in a geometric progression present in an array
     :param arr: A sorted array
@@ -749,12 +780,11 @@ def count_triplets(arr, r):
     :return: The maximum number of triplets that follow geometric progression
     '''
     # Data Validation on param
-    if not isinstance(arr, list):
-        raise TypeError('Parameter must be a populated sorted integer array')
-    if not isinstance(r, int):
-        raise TypeError('The common ratio (multiplier) parameter must be a positive integer.')
-    if not r >= 0:
-        raise ValueError('The common ratio (multiplier) parameter must be a positive integer.')
+    error_message = 'Parameters must be a populated sorted integer array and a positive integer.'
+    if not (isinstance(arr, list) and isinstance(r, int)):
+        raise TypeError(error_message)
+    if not (arr and r >= 0):
+        raise ValueError(error_message)
 
     # Stores number of tuples with two elements that can be formed if the key is present
     potential_two_tuples = defaultdict(int)
@@ -776,9 +806,9 @@ def count_triplets(arr, r):
 '''
 Frequency Queries
 
-You are given q queries. Each query is of the form two integers described below: 
-- 1 x: Insert x in your data structure. 
-- 2 y: Delete one occurence of y from your data structure, if present. 
+You are given q queries. Each query is of the form two integers described below:
+- 1 x: Insert x in your data structure.
+- 2 y: Delete one occurence of y from your data structure, if present.
 - 3 z: Check if any integer is present whose frequency is exactly z. If yes, print 1 else 0.
 Ex.
 Operation   Array               Output
@@ -791,7 +821,7 @@ Operation   Array               Output
 [2, 5]      [6, 6, 10, 10]
 [3, 2]                          1
 '''
-def freq_query(queries):
+def freq_query(queries: list):
     '''
     From a 2D array, perform the following queries
     1: Insert x in your data structure. 
@@ -812,6 +842,8 @@ def freq_query(queries):
     by_value = Counter()
     by_freq = Counter()
     for query in queries:
+        if len(query) != 2:
+            raise ValueError('Each operation must be a list of 2 integers.')
         operation, value = query[0], query[1]
         if operation == 1:
             by_freq[by_value[value]] -= 1

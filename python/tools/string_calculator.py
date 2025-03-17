@@ -1,5 +1,5 @@
 #
-# Vincent Charming (c) 2019
+# Vincent Charming (c) 2025
 #
 '''
 Task: Design a calculator to compute an arithmetic string, i.e. '1 + 1' => 2
@@ -42,7 +42,7 @@ def contains_add_sub_operands(s):
     else:
         return True
 
-def str_calc_simple(str_1, str_2, operand):
+def str_calc_simple(str_1: str, str_2: str, operand: str):
     '''
     Performs a calculation and returns the result.
     :param str_1: A number as a string

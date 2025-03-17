@@ -18,11 +18,12 @@ logging.basicConfig(format=LOG_FORMAT)
 logger.setLevel(logging.DEBUG)
 
 
-def get_fibonacci(n):
+def get_fibonacci(n: int, reverse_sequence: bool = False) -> list:
     """
     Returns the fibonacci sequence to n places
-    :param n: positive integer
-    :return:
+    :param n: A positive integer for the number of places of the fibonacci sequence
+    :param reverse_sequence: Flag to reverse the fibonacci sequence
+    :return: A list of the fibonacci sequence
     """
     # Data Validation
     error_message = "Parameter must be a positive integer."
@@ -30,7 +31,7 @@ def get_fibonacci(n):
         raise TypeError(error_message)
     if n <= 0:
         raise ValueError(error_message)
-    
+
     current_num_behind_2, current_num_behind_1, current_num  = 0, 1, 1
     fibonacci_sequence = []
     for i in range(n):
@@ -38,6 +39,9 @@ def get_fibonacci(n):
         current_num = current_num_behind_2 + current_num_behind_1
         current_num_behind_2 = current_num_behind_1
         current_num_behind_1 = current_num
+    if reverse_sequence:
+        logger.info("Reversing the fibonacci sequence.")
+        fibonacci_sequence.reverse()    # O(n)
     return fibonacci_sequence
 
 
@@ -69,10 +73,7 @@ def main(args):
     """
 
     logger.info(f"Getting the fibonacci sequence to {args.num_of_places} places.")
-    fibonacci_sequence = get_fibonacci(int(args.num_of_places)) # O(n)
-    if args.reverse_sequence:
-        logger.info("Reversing the fibonacci sequence.")
-        fibonacci_sequence.reverse()    # O(n)
+    fibonacci_sequence = get_fibonacci(int(args.num_of_places), args.reverse_sequence) # O(n)
     for fibonacci_num in fibonacci_sequence:
         logger.info(fibonacci_num)
 
